@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Repository
   def persist model
     data(model).save!
@@ -12,7 +14,12 @@ module Repository
   end
 
   def data model
-    model.internal_data
+    res = model._data
+    if res.kind_of? OpenStruct
+      res = data_class.new res.marshal_dump
+    end
+    model._data = res
+    res
   end
 
   def set_data_class clazz

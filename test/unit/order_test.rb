@@ -58,6 +58,8 @@ class OrderTest < ActiveSupport::TestCase
   test "persisting an aggregate with children" do
     order = Order.new
     order.amount = 10
+    OrderRepository.persist order
+
     order.add_item name: 'item1', amount: 5
 
     OrderRepository.persist order
