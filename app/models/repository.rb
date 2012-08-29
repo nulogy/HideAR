@@ -22,15 +22,19 @@ module Repository
     res
   end
 
-  def set_data_class clazz
-    singleton_class.send :define_method, :data_class do
-      clazz
-    end
-  end
+  def set_model_class model_class, options
+    raise "Data class is not provided" unless options[:for]
 
-  def set_model_class clazz
-    singleton_class.send :define_method, :model_class do
-      clazz
+    Registry.associate(model_class, options[:for])
+
+    if options[:root]
+      singleton_class.send :define_method, :data_class do
+        options[:for]
+      end
+
+      singleton_class.send :define_method, :model_class do
+        model_class
+      end
     end
   end
 end

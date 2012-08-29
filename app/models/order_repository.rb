@@ -19,9 +19,8 @@ module OrderRepository
     validates :name, presence: true
   end
 
-  set_data_class OrderData
-  set_model_class Order
-
+  set_model_class Order, for: OrderData, root: true
+  set_model_class Item, for: ItemData
 
   def self.find_by_amount amount
     where(amount: amount)

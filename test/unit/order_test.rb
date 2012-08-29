@@ -56,10 +56,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "persisting an aggregate with children" do
-    order = Order.new
-    order.amount = 10
-    OrderRepository.persist order
-
+    order = Order.new amount: 10
     order.add_item name: 'item1', amount: 5
 
     OrderRepository.persist order
@@ -82,7 +79,7 @@ class OrderTest < ActiveSupport::TestCase
   end
 
   test "using data validation for a new model" do
-    order = Order.new
+    order = Order.new amount: 10
     assert_equal [], DataValidator.validate(order)
   end
 end

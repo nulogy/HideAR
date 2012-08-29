@@ -7,12 +7,18 @@ module Model
 
   attr_accessor :_data
 
-  def initialize _data = OpenStruct.new
+  def initialize _data = _new_instance
     if _data.kind_of?(Hash)
-      @_data = OpenStruct.new _data
+      @_data = _new_instance _data
     else
       @_data = _data
     end
+  end
+
+  private
+
+  def _new_instance hash = {}
+    Registry.data_class_for(self.class).new hash
   end
 
   module ClassMethods
