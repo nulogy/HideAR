@@ -4,7 +4,7 @@ class Order
   fields :id, :amount
 
   def items
-    _data.items.map{|_| Item.new _}
+    wrap(_data.items)
   end
 
   def add_item attrs

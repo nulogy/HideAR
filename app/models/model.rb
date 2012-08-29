@@ -15,6 +15,14 @@ module Model
     end
   end
 
+  protected
+
+  def wrap collection
+    return [] if collection.empty?
+    model_class = Registry.model_class_for(collection.first.class)
+    collection.map{|c| model_class.new c}
+  end
+
   private
 
   def _new_instance hash = {}
