@@ -20,11 +20,10 @@ module OrderRepository
   end
 
   set_data_class OrderData
+  set_model_class Order
 
 
   def self.find_by_amount amount
-    where(amount: amount).map do |data|
-      Order.new data
-    end
+    where(amount: amount)
   end
 end

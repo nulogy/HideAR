@@ -73,4 +73,16 @@ class OrderTest < ActiveSupport::TestCase
     order.amount = 99
     assert_equal 99, order.amount
   end
+
+  test "using data validation for a saved model" do
+    order_data = OrderRepository::OrderData.create! amount: 10, deliver_at: Date.today
+
+    order = Order.new(order_data)
+    assert_equal [], DataValidator.validate(order)
+  end
+
+  test "using data validation for a new model" do
+    order = Order.new
+    assert_equal [], DataValidator.validate(order)
+  end
 end

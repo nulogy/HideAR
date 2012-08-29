@@ -27,4 +27,10 @@ module Repository
       clazz
     end
   end
+
+  def set_model_class clazz
+    singleton_class.send :define_method, :model_class do
+      clazz
+    end
+  end
 end
