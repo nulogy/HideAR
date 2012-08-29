@@ -17,13 +17,15 @@ module Model
 
   protected
 
+  def collection name
+    _data.send(name)
+  end
+
   def wrap collection
     return [] if collection.empty?
     model_class = Registry.model_class_for(collection.first.class)
     collection.map{|c| model_class.new c}
   end
-
-  private
 
   def _new_instance hash = {}
     Registry.data_class_for(self.class).new hash
@@ -34,6 +36,14 @@ module Model
       field_names.each do |field_name|
         self.delegate field_name, to: :_data
         self.delegate "#{field_name}=", to: :_data
+      end
+    end
+
+    def collections *collection_names
+      collection_names.each do |collection_name|
+        define_method collection_name do
+          wrap(collection collection_name)
+        end
       end
     end
   end
