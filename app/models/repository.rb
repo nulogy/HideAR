@@ -14,12 +14,7 @@ module Repository
   end
 
   def data model
-    res = model._data
-    if res.kind_of? OpenStruct
-      res = data_class.new res.marshal_dump
-    end
-    model._data = res
-    res
+    model._data
   end
 
   def set_model_class model_class, options
